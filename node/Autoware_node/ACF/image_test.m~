@@ -11,7 +11,7 @@ obj.videoPlayer = vision.VideoPlayer('Position', [29, 597,643,386]);
 
 
 option.ROI                  = [40 95 400 140];  % A rectangle [x, y, w, h] that limits the processing area to ground locations.
-option.scThresh             = 1;              % A threshold to control the tolerance of error in estimating the scale of a detected pedestrian. 
+option.scThresh             = 0.3;              % A threshold to control the tolerance of error in estimating the scale of a detected pedestrian. 
 option.gatingThresh         = 0.9;              % A threshold to reject a candidate match between a detection and a track.
 option.gatingCost           = 100;              % A large value for the assignment cost matrix that enforces the rejection of a candidate match.
 option.costOfNonAssignment  = 20;               % A tuning parameter to control the likelihood of creation of a new track.
@@ -26,8 +26,6 @@ sub = robotics.ros.Subscriber(node, '/image_raw', 'sensor_msgs/Image', @image_ca
 
 function image_callback(~, msg)
 	global obj;
-    global option;
-    
     Image = readImage(msg);
     detector = peopleDetectorACF('caltech');
     
