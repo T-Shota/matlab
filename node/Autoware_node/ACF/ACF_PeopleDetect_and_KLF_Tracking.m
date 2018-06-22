@@ -10,31 +10,33 @@ global nextId;
 global obj;
 global option;
 
-detector = peopleDetectorACF('caltech');
-tracks = initializeTracks();
-nextId = 1;
-
 ld = load('pedScaleTable.mat', 'pedScaleTable');
 obj.pedScaleTable = ld.pedScaleTable;
+obj.videoPlayer = vision.VideoPlayer('Position', [29, 597,643,386]);
+
+detector = peopleDetectorACF('caltech');
+
+% Create an empty array of track.
+tracks = initializeTracks();
+nextId = 1;
 
 option.ROI                  = [40 95 400 140];  % A rectangle [x, y, w, h] that limits the processing area to ground locations.
 option.scThresh             = 0.3;              % A threshold to control the tolerance of error in estimating the scale of a detected pedestrian. 
 option.gatingThresh         = 0.9;              % A threshold to reject a candidate match between a detection and a track.
 option.gatingCost           = 100;              % A large value for the assignment cost matrix that enforces the rejection of a candidate match.
-option.costOfNonAssignment  = 10;               % A tuning parameter to control the likelihood of creation of a new track.
+option.costOfNonAssignment  = 20;               % A tuning parameter to control the likelihood of creation of a new track.
 option.timeWindowSize       = 16;               % A tuning parameter to specify the number of frames required to stabilize the confidence score of a track.
 option.confidenceThresh     = 2;                % A threshold to determine if a track is true positive or false alarm.
 option.ageThresh            = 8;                % A threshold to determine the minimum length required for a track being true positive.
 option.visThresh            = 0.6;              % A threshold to determine the minimum visibility value for a track being true positive.
 
-%% define node
+%% Define node
 ptm_node = robotics.ros.Node('pedestrian_tracking_matlab');
 ptm_sub = robotics.ros.Subscriber(ptm_node, '/image_raw', 'sensor_msgs/Image', @callback_trackingACF);
 
-
-%% function
+%% Function
+% initialize tracks
 function tracks = initializeTracks()
-    % Create an empty array of tracks
     tracks = struct(...
         'id', {}, ...
         'color', {}, ...
@@ -49,7 +51,7 @@ end
 
 %% callback function
 function callback_trackingACF(~, msg)
-	%% define global variable
+	% define global variable
 	global detector;
 	global tracks;
 	global nextId;
@@ -77,10 +79,9 @@ function callback_trackingACF(~, msg)
     function [centroids, bboxes, scores] = detectPeople()
         % Resize the image to increase the resolution of the pedestrian.
         % This helps detect people further away from the camera.
-        resizeRatio = 1.5;
-        image = imresize(image, resizeRatio, 'Antialiasing',false);
+        resizeRatio = 1.0;
+        image = imresize(image, resizeRatio, 'Antialiasing', false);
 
-        % Run ACF people detector within a region of interest to produce
         % detection candidates.
         [bboxes, scores] = detect(detector, image)
 

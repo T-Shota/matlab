@@ -12,7 +12,7 @@ function image_callback(~, msg)
 	global obj;
 
 	detector = peopleDetectorACF('caltech');
-	resizeRatio = 1.5;
+	resizeRatio = 1.0;
 	I = readImage(msg);
 	I = imresize(I, resizeRatio, 'Antialiasing', false);
     [bboxes, scores] = detect(detector, I);
