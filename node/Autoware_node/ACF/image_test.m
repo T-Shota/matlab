@@ -27,11 +27,11 @@ sub = robotics.ros.Subscriber(node, '/image_raw', 'sensor_msgs/Image', @image_ca
 function image_callback(~, msg)
 	global obj;
     global option;
-    
+
     Image = readImage(msg);
     detector = peopleDetectorACF('caltech');
-    
-    [centroids, bboxes, scores] = detectPeople();  
+
+    [centroids, bboxes, scores] = detectPeople();
 
     function [centroids, bboxes, scores] = detectPeople()
         % Resize the image to increase the resolution of the pedestrian.

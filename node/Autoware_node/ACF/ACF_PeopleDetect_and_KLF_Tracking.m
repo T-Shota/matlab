@@ -90,17 +90,17 @@ function callback_trackingACF(~, msg)
 %            'NumScaleLevels', 4, ...
 %            'SelectStrongest', false);
 
-        % Look up the estimated height of a pedestrian based on location of their feet.
-        height = bboxes(:, 4) / resizeRatio;
-        y = (bboxes(:,2)-1) / resizeRatio + 1;
-        yfoot = min(length(obj.pedScaleTable), round(y + height));
-        estHeight = obj.pedScaleTable(yfoot);
+%        % Look up the estimated height of a pedestrian based on location of their feet.
+%        height = bboxes(:, 4) / resizeRatio;
+%       y = (bboxes(:,2)-1) / resizeRatio + 1;
+%        yfoot = min(length(obj.pedScaleTable), round(y + height));
+%        estHeight = obj.pedScaleTable(yfoot);
 
         % Remove detections whose size deviates from the expected size,
         % provided by the calibrated scale estimation.
-        invalid = abs(estHeight - height) > estHeight * option.scThresh;
-        bboxes(invalid, :) = [];
-        scores(invalid, :) = [];
+%        invalid = abs(estHeight - height) > estHeight * option.scThresh;
+%        bboxes(invalid, :) = [];
+%        scores(invalid, :) = [];
 
          % Apply non-maximum suppression to select the strongest bounding boxes.
         [bboxes, scores] = selectStrongestBbox(bboxes, scores, ...
