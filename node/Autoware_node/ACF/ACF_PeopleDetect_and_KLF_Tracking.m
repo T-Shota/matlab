@@ -98,7 +98,7 @@ function callback_trackingACF(~, msg)
 
         % Remove detections whose size deviates from the expected size,
         % provided by the calibrated scale estimation.
-        invalid = abs(estHeigh - height) > estHeight * option.scThresh;
+        invalid = abs(estHeight - height) > estHeight * option.scThresh;
         bboxes(invalid, :) = [];
         scores(invalid, :) = [];
 
