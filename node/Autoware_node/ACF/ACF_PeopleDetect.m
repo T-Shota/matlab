@@ -5,10 +5,10 @@ rosinit;
 global obj;
 obj.videoPlayer = vision.VideoPlayer('Position', [29, 597,643,386]);
 
-node = robotics.ros.Node('test');
-sub = robotics.ros.Subscriber(node, '/image_raw', 'sensor_msgs/Image', @image_callback);
+node = robotics.ros.Node('ACF_detection_matlab');
+sub = robotics.ros.Subscriber(node, '/image_raw', 'sensor_msgs/Image', @ACF_detection_callback);
 
-function image_callback(~, msg)
+function ACF_detection_callback(~, msg)
 	global obj;
 
 	detector = peopleDetectorACF('caltech');

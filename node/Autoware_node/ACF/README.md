@@ -2,5 +2,6 @@
 
 ## Required Toolbox
 - MATLAB
-- Computer vision toolbox
-- Image processing toolbox
+- Robotics System Toolbox
+- Computer Vision Toolbox
+- Image Processing Toolbox
