@@ -12,7 +12,7 @@ sub = robotics.ros.Subscriber(node, '/points_raw', 'sensor_msgs/PointCloud2', @g
 
 function grid_downsampling_callback(~, msg)
 	global obj;
-	ptCloud = readXYZ(msg);
+	ptCloud = pointCloud(readXYZ(msg),'Color',uint8(255*readRGB(msg)));
 
 	gridStep = 2;
 	filtered_ptCloud = pcdownsample(ptCloud,'gridAverage',gridStep);
