@@ -17,4 +17,5 @@ function random_downsampling_callback(~, msg)
 	filtered_ptCloud = pcdownsample(ptCloud, 'random', percentage);
 
     pcshow(filtered_ptCloud);
+
 end
