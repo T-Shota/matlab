@@ -10,7 +10,7 @@ node = robotics.ros.Node('grid_downsampling_matlab');
 sub = robotics.ros.Subscriber(node, '/points_raw', 'sensor_msgs/PointCloud2', @grid_downsampling_callback);
 
 function grid_downsampling_callback(~, msg)
-	ptCloud = pointCloud(readXYZ(msg));
+	ptCloud = pointCloud(readXYZ(msg), 'intensity', readField(msg, 'intensity'));
 
 	% gridStep is voxelsize [m]
 	gridStep = 2.0;
